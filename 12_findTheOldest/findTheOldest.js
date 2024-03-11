@@ -1,22 +1,25 @@
 const findTheOldest = function(array) {
-    let oldestAge = 0
-    let oldestName =""
-    let arrayLen = array.length
-    for (let i = 0; i< arrayLen ; i++){
-        currentName = array[i]['name'];
-        deathYear = array[i]['yearOfDeath'];
-        birthYear = array[i]['yearOfBirth'];
-        
-        currentAge =  deathYear - birthYear ;
-
-        if ( currentAge > oldestAge) {
-            oldestAge = currentAge
-            oldestName = currentName
-
-        }
-    }
-    return oldestName
+    return array.reduce(findOldestPerson)    // reduce() uses a function to cycle through array.
 };
+
+function getAge(deathYear, birthYear){
+    if (!deathYear) {
+        deathYear = new Date().getFullYear();
+      }
+    return deathYear - birthYear
+}
+function findOldestPerson(oldestPerson,currentPerson){     //for reduce(), first argument is the value u want,
+                                                           // second value is the current index of the array.
+    let oldestAge = getAge(oldestPerson.yearOfDeath, oldestPerson.yearOfBirth)  
+    let currentAge = getAge(currentPerson.yearOfDeath, currentPerson.yearOfBirth)
+    if ( currentAge > oldestAge) {
+        return currentPerson      // replaces oldestPerson with value of currentPerson
+    }
+    else{
+        return oldestPerson
+    }
+
+}
 
 // Do not edit below this line
 module.exports = findTheOldest;
